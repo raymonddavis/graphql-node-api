@@ -32,14 +32,12 @@ export const cleanUser = (user) => {
 
 export const addUser = async (req) => {
   const { token } = req.headers;
-  const facebookCallback = req.headers.referer ?
-    req.headers.referer.includes(process.env.FACEBOOK_CALLBACK_URL) :
-    false;
-  const googleCallback = req.headers.referer ?
-    req.headers.referer.includes(process.env.GOOGLE_CALLBACK_URL) :
-    false;
 
-  if (!facebookCallback && !googleCallback) {
+  const noTokenAllowed = req.originalUrl === '/favicon.ico' ||
+  req.originalUrl === '/graphiql' ||
+  req.originalUrl.includes('/graphql?');
+
+  if (!noTokenAllowed) {
     try {
       const { user } = await jwt.verify(token, process.env.SECRET);
       req.user = user;

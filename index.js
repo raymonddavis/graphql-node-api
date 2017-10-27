@@ -54,7 +54,6 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['email'] }));
 app.get('/auth/google/callback', passport.authenticate('google', socialConfig), socialResponse);
 
 app.use(cors('*'));
-app.use(addUser);
 
 app.use(
   '/graphiql',
@@ -77,6 +76,8 @@ const batchSuggestions = async (keys, { Suggestion }) => {
 
   return keys.map(k => gs[k] || []);
 };
+
+app.use(addUser);
 
 app.use(
   '/graphql',

@@ -31,6 +31,11 @@ export const types = `
     boards: [Board!]!
     suggestions: [Suggestion!]!
   }
+
+  type Login {
+    token: String!
+    user: User!
+  }
 `;
 
 export const queries = `
@@ -43,7 +48,7 @@ export const queries = `
 
 export const mutations = `
   register(firstName: String!, lastName: String!, email: String!, password: String!): User
-  login(email: String!, password: String!): String
+  login(email: String!, password: String!): Login!
   refreshToken: String!
   createUser(username: String!): User!
   updateUser(id: Int!, data: UserInput): Int!
