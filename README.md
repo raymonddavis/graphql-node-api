@@ -2,7 +2,7 @@
 
 
 ## Setup
-1. ``` install ```
+1. ``` yarn install ```
 2. Create a `.env` file.
 3. Template for `.env`
 ```
