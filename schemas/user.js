@@ -8,8 +8,8 @@ export const inputs = `
     phoneNumber: String
     photos: String
     isAdmin: Boolean
-    lastTrip: Int
-    lastActive: Int
+    lastTrip: String
+    lastActive: String
   }
 `;
 
@@ -24,10 +24,10 @@ export const types = `
     phoneNumber: String
     photos: String
     isAdmin: Boolean
-    lastTrip: Int
-    lastActive: Int
-    createdAt: Int
-    updatedAt: Int
+    lastTrip: String
+    lastActive: String
+    createdAt: String
+    updatedAt: String
     boards: [Board!]!
     suggestions: [Suggestion!]!
   }
@@ -40,8 +40,8 @@ export const types = `
 
 export const queries = `
   me: User
-  allUsers: [User!]
-  getUser(id: Int!): User
+  user(id: Int!): User
+  users(limit: Int, offset: Int): [User!]
   userBoards(owner: Int!): [Board!]!
   userSuggestions(creatorId: Int!): [Suggestion!]!
 `;

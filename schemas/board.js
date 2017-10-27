@@ -3,7 +3,7 @@ export const inputs = `
     id: Int!
     name: String!
     suggestions: [Suggestion!]!
-    owner: Int!
+    owner: User!
   }
 `;
 

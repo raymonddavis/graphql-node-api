@@ -26,7 +26,7 @@ export default {
     }),
   },
   Query: {
-    allUsers: requiresAuth.createResolver((parent, args, { models }) => models.User.findAll()),
+    // allUsers: requiresAuth.createResolver((parent, args, { models }) => models.User.findAll()),
     me: (parent, args, { models, user }) => {
       if (user) {
         return models.User.findOne({ where: { id: user.id } });
@@ -34,9 +34,12 @@ export default {
 
       return null;
     },
-    getUser: (parent, { id }, { models }) => models.User.findOne({ where: { id } }),
+    user: (parent, { id }, { models }) => models.User.findOne({ where: { id } }),
+    users: (parent, args, { models }) => models.User.findAll(args),
     userBoards: (parent, { owner }, { models }) => models.Board.findAll({ where: { owner } }),
-    userSuggestions: (parent, { creatorId }, { models }) => models.Suggestion.findAll({ where: { creatorId } }),
+    userSuggestions: (parent, { creatorId }, { models }) => models.Suggestion.findAll({
+      where: { creatorId },
+    }),
   },
   Mutation: {
     register: async (parent, args, { models }) => {
@@ -57,7 +60,7 @@ export default {
 
       return {
         token: generateToken(user),
-        user: cleanUser(user),
+        user,
       };
     },
     refreshToken: async (parent, args, { models, user }) => {
