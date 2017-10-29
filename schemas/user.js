@@ -50,11 +50,12 @@ export const mutations = `
   register(firstName: String!, lastName: String!, email: String!, password: String!): User
   login(email: String!, password: String!): Login!
   refreshToken: String!
-  createUser(username: String!): User!
-  updateUser(id: Int!, data: UserInput): Int!
+  updateUser(id: Int!, input: UserInput): Int!
   deleteUser(id: Int!): Int!
 `;
 
 export const subscriptions = `
-  userAdded: User!
+  userCreated: User!
+  userUpdated: User!
+  userDeleted: User!
 `;

@@ -33,22 +33,16 @@ export const cleanUser = (user) => {
 export const addUser = async (req) => {
   const { token } = req.headers;
 
-  const noTokenAllowed = req.originalUrl === '/favicon.ico' ||
-  req.originalUrl === '/graphiql' ||
-  req.originalUrl.includes('/graphql?');
-
-  if (!noTokenAllowed) {
-    try {
-      const { user } = await jwt.verify(token, process.env.SECRET);
+  try {
+    const { user } = await jwt.verify(token, process.env.SECRET);
+    req.user = user;
+    req.token = token;
+  } catch (e) {
+    if (e.name !== 'TokenExpiredError') {
+      throw new Error('Invalid Token.');
+    } else {
+      const { user } = await jwt.decode(token);
       req.user = user;
-      req.token = token;
-    } catch (e) {
-      if (e.name !== 'TokenExpiredError') {
-        throw new Error('Invalid Token.');
-      } else {
-        const { user } = await jwt.decode(token);
-        req.user = user;
-      }
     }
   }
 
